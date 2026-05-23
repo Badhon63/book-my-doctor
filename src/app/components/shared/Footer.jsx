@@ -7,7 +7,9 @@ const Footer = () => {
     <footer className="bg-base-200 text-base-content mt-16">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center text-center md:text-left">
         <div>
-          <h2 className="text-4xl font-bold text-primary mb-3">DocAppoint</h2>
+          <h2 className="text-4xl font-bold text-primary mb-3">
+            🩺 DocAppoint
+          </h2>
           <p className="text-sm text-gray-500 leading-relaxed">
             Bangladesh&apos;s trusted doctor appointment platform. Book, manage,
             and track your health care with ease.
