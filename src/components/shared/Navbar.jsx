@@ -47,13 +47,18 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="tertiary"
-              className={"rounded-none hidden sm:block"}
-            >
-              Login
-            </Button>
-            <Button className={"rounded-none "}>Register</Button>
+            <Link href={"/login"}>
+              <Button
+                variant="tertiary"
+                className={"rounded-none hidden sm:block"}
+              >
+                Login
+              </Button>
+            </Link>
+            <Link href={"/signup"}>
+              {" "}
+              <Button className={"rounded-none "}>Register</Button>
+            </Link>{" "}
           </div>
         </div>
 

@@ -1,5 +1,5 @@
-import { getDoctorDetails } from "@/app/lib/fetchData";
 import DetailsCardDoctor from "@/components/DetailsCardDoctor";
+import { getDoctorDetails } from "@/lib/fetchData";
 import React from "react";
 
 const DoctorDetailsPage = async ({ params }) => {
