@@ -19,7 +19,7 @@ const Navbar = () => {
             >
               <CiMenuBurger />
             </button>
-            <p className="font-bold text-2xl">🩺 DocAppoint</p>
+            <p className="font-bold text-2xl">🩺 DoctorNow</p>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="flex gap- p-2 text-sm">
