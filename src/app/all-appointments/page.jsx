@@ -1,6 +1,6 @@
 import React from "react";
 import { getAllDoctors } from "../lib/fetchData";
-import CardAllDoctors from "../components/homepage/CardAllDoctors";
+import CardAllDoctors from "../../components/CardAllDoctors";
 
 const AllAppointmentsPage = async () => {
   const doctors = await getAllDoctors();

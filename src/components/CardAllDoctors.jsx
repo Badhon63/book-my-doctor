@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@heroui/react";
 import { FiMapPin, FiClock } from "react-icons/fi";
 import Image from "next/image";
+import Link from "next/link";
 
 const CardAllDoctors = ({ doctor }) => {
   return (
@@ -50,9 +51,11 @@ const CardAllDoctors = ({ doctor }) => {
               ৳{doctor.fee}
             </span>
           </div>
-          <Button color="primary" className=" font-semibold rounded-lg">
-            View Details
-          </Button>
+          <Link href={`doctors/${doctor.id}`}>
+            <Button color="primary" className=" font-semibold rounded-lg">
+              View Details
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import CardAllDoctors from "./CardAllDoctors";
+import CardAllDoctors from "../CardAllDoctors";
 
 const TopDoctors = ({ topDoctors }) => {
   return (
