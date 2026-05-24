@@ -27,6 +27,12 @@ const Signup = () => {
     });
     console.log("data:", data, "error:", error);
   };
+  const googleSignUp = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log("google sign in data:", data);
+  };
 
   return (
     <div className="max-w-7xl mx-auto flex justify-center mt-12">
@@ -108,7 +114,10 @@ const Signup = () => {
           <div className="border h-px w-full"></div>
           <div>OR</div> <div className="border h-px w-full"></div>
         </div>
-        <div className="flex items-center select-none cursor-pointer gap-2 justify-center bg-white p-2 font-semibold rounded-lg">
+        <div
+          onClick={googleSignUp}
+          className="flex items-center select-none cursor-pointer gap-2 justify-center bg-white p-2 font-semibold rounded-lg"
+        >
           <span className="text-xl">
             {" "}
             <FcGoogle />

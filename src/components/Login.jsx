@@ -23,7 +23,7 @@ const Login = () => {
       email: user.email,
       password: user.password,
       rememberMe: true,
-      callbackURL: "/",
+      // callbackURL: "/",
     });
     console.log("data:", data, "error:", error);
   };
