@@ -4,6 +4,7 @@ import { FaRegClock } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
 import { MdDateRange, MdDeleteForever } from "react-icons/md";
 import UpdateBookingModal from "./UpdateBookingModal";
+import DeleteModal from "./DeleteModal";
 
 const MyAppointmentsCard = ({ app }) => {
   const { date, doctorName, time, name, reason } = app;
@@ -25,10 +26,7 @@ const MyAppointmentsCard = ({ app }) => {
       <p className="opacity-70 mb-3">Reason: {reason}</p>
       <div className="flex gap-2">
         <UpdateBookingModal app={app} />
-        <Button className={"rounded-md"} variant="danger">
-          <MdDeleteForever />
-          Delete
-        </Button>
+        <DeleteModal app={app} />
       </div>
     </div>
   );

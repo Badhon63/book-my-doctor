@@ -26,3 +26,12 @@ export const updateBooking = async (id, newData) => {
   revalidatePath("/dashboard");
   return data;
 };
+
+export const deleteBooking = async (id) => {
+  const res = await fetch(`${process.env.SERVER_URL}/appointments/${id}`, {
+    method: "DELETE",
+  });
+  const data = await res.json();
+  revalidatePath("/dashboard");
+  return data;
+};
