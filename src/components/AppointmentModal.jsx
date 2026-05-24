@@ -13,21 +13,18 @@ import {
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 
-const AppointmentModal = ({ docDetails }) => {
-  const {
-    name,
-    specialty,
-    image,
-    experience,
-    availability,
-    description,
-    hospital,
-    location,
-    fee,
-  } = docDetails;
-  const { data: session, isPending } = authClient.useSession();
-
+const AppointmentModal = ({ docDetails, createAppointment }) => {
+  const { data: session } = authClient.useSession();
   const user = session?.user;
+  const userId = user?.id;
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const appointment = Object.fromEntries(formData.entries());
+    appointment.userId = userId;
+    await createAppointment(appointment);
+  };
 
   return (
     <div>
@@ -40,30 +37,30 @@ const AppointmentModal = ({ docDetails }) => {
               <Modal.Header>
                 <Modal.Heading>Book Appointment</Modal.Heading>
                 <p className="-mt-2 text-sm leading-5 text-muted">
-                  with {name}
+                  with {docDetails.name}
                 </p>
               </Modal.Header>
               <Modal.Body className="p-6">
                 <Surface variant="default">
-                  <form className="flex flex-col gap-4">
+                  <form onSubmit={onSubmit} className="flex flex-col gap-4">
                     <TextField
                       className="w-full"
                       name="email"
                       type="email"
                       variant="secondary"
                       defaultValue={user?.email}
-                      isDisabled
+                      isReadOnly
                     >
                       <Label>User Email</Label>
                       <Input />
                     </TextField>
                     <TextField
                       className="w-full"
-                      name="doctor-name"
+                      name="doctorName"
                       type="text"
                       variant="secondary"
-                      defaultValue={name}
-                      isDisabled
+                      defaultValue={docDetails.name}
+                      isReadOnly
                     >
                       <Label>Doctor Name</Label>
                       <Input />
@@ -83,6 +80,7 @@ const AppointmentModal = ({ docDetails }) => {
                       <Select
                         className="w-[256px] "
                         placeholder="Select one"
+                        name="gender"
                         isRequired
                       >
                         <Label>Gender</Label>
@@ -154,15 +152,17 @@ const AppointmentModal = ({ docDetails }) => {
                       </Label>
                       <Input placeholder="Brief reason for visit" />
                     </TextField>
+                    <Modal.Footer>
+                      <Button slot="close" variant="secondary">
+                        Cancel
+                      </Button>
+                      <Button slot="" type="submit">
+                        Confirm Booking
+                      </Button>
+                    </Modal.Footer>
                   </form>
                 </Surface>
               </Modal.Body>
-              <Modal.Footer>
-                <Button slot="close" variant="secondary">
-                  Cancel
-                </Button>
-                <Button slot="close">Confirm Booking</Button>
-              </Modal.Footer>
             </Modal.Dialog>
           </Modal.Container>
         </Modal.Backdrop>

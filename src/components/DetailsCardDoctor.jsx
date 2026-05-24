@@ -5,6 +5,7 @@ import { FaRegClock } from "react-icons/fa6";
 import { FiMapPin } from "react-icons/fi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import AppointmentModal from "./AppointmentModal";
+import { createAppointment } from "@/lib/actions";
 
 const DetailsCardDoctor = ({ docDetails }) => {
   const {
@@ -27,6 +28,7 @@ const DetailsCardDoctor = ({ docDetails }) => {
           width={500}
           height={500}
           className="h-98  w-80 object-cover rounded-md"
+          priority
         ></Image>
       </figure>
       <div className="space-y-3 px-5 sm:px-0">
@@ -85,7 +87,10 @@ const DetailsCardDoctor = ({ docDetails }) => {
             </span>
           ))}
         </div>
-        <AppointmentModal docDetails={docDetails} />
+        <AppointmentModal
+          docDetails={docDetails}
+          createAppointment={createAppointment}
+        />
       </div>
     </div>
   );

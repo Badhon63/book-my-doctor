@@ -9,3 +9,9 @@ export const getDoctorDetails = async (id) => {
   const data = await res.json();
   return data;
 };
+
+export const getAppointments = async (id) => {
+  const res = fetch(`${process.env.SERVER_URL}/appointments/${id}`);
+  const data = (await res).json();
+  return data;
+};

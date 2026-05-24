@@ -13,6 +13,7 @@ const CardAllDoctors = ({ doctor }) => {
           alt={doctor.name}
           width={500}
           height={500}
+          priority
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
       </div>
