@@ -1,10 +1,10 @@
-import { Button } from "@heroui/react";
 import Image from "next/image";
 import React from "react";
 import { FaHospital } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa6";
 import { FiMapPin } from "react-icons/fi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import AppointmentModal from "./AppointmentModal";
 
 const DetailsCardDoctor = ({ docDetails }) => {
   const {
@@ -85,7 +85,7 @@ const DetailsCardDoctor = ({ docDetails }) => {
             </span>
           ))}
         </div>
-        <Button className={"rounded-md mt-3"}>Book Appointment</Button>
+        <AppointmentModal docDetails={docDetails} />
       </div>
     </div>
   );

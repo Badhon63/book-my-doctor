@@ -1,12 +1,29 @@
 "use client";
 
-import { Button } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button, Spinner } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
+  const user = session?.user;
+
+  const signOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+      },
+    });
+  };
 
   return (
     <div className="shadow bg-gray-100">
@@ -46,20 +63,46 @@ const Navbar = () => {
               </Link>
             </ul>
           </div>
-          <div className="flex gap-2">
-            <Link href={"/login"}>
-              <Button
-                variant="tertiary"
-                className={"rounded-none hidden sm:block"}
+          {isPending ? (
+            <Spinner className="" />
+          ) : user ? (
+            <div className="flex gap-2">
+              <Link href={"/profile"}>
+                <Avatar>
+                  <Avatar.Image
+                    className="hover:bg-gray-300 active:bg-gray-200 duration-75"
+                    alt="John Doe"
+                    src={user?.image}
+                  />
+                  <Avatar.Fallback className="hover:bg-gray-300 active:bg-gray-200 duration-75">
+                    {user.name.charAt(0)}
+                  </Avatar.Fallback>
+                </Avatar>
+              </Link>
+              <button
+                onClick={signOut}
+                className="flex items-center gap-2 border py-1 px-3 rounded-lg hover:bg-gray-200 cursor-pointer"
               >
-                Login
-              </Button>
-            </Link>
-            <Link href={"/signup"}>
-              {" "}
-              <Button className={"rounded-none "}>Register</Button>
-            </Link>{" "}
-          </div>
+                Logout
+                <FaSignOutAlt />
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Link href={"/login"}>
+                <Button
+                  variant="tertiary"
+                  className={"rounded-none hidden sm:block"}
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link href={"/signup"}>
+                {" "}
+                <Button className={"rounded-none "}>Register</Button>
+              </Link>{" "}
+            </div>
+          )}
         </div>
 
         {isMenuOpen && (

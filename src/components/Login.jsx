@@ -23,9 +23,16 @@ const Login = () => {
       email: user.email,
       password: user.password,
       rememberMe: true,
-      // callbackURL: "/",
+      callbackURL: "/",
     });
     console.log("data:", data, "error:", error);
+  };
+
+  const googleLogin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log("google sign in data:", data);
   };
 
   return (
@@ -83,7 +90,10 @@ const Login = () => {
           <div className="border h-px w-full"></div>
           <div>OR</div> <div className="border h-px w-full"></div>
         </div>
-        <div className="flex items-center select-none cursor-pointer gap-2 justify-center bg-white p-2 font-semibold rounded-lg">
+        <div
+          onClick={googleLogin}
+          className="flex items-center select-none cursor-pointer gap-2 justify-center bg-white p-2 font-semibold rounded-lg"
+        >
           <span className="text-xl">
             {" "}
             <FcGoogle />
