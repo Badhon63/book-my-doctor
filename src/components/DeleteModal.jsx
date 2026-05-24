@@ -4,8 +4,6 @@ import { MdDeleteForever } from "react-icons/md";
 import { deleteBooking } from "@/lib/actions";
 
 const DeleteModal = ({ app }) => {
-  console.log(app._id);
-
   const handleDelete = async () => {
     const res = await deleteBooking(app._id);
   };

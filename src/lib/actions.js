@@ -35,3 +35,16 @@ export const deleteBooking = async (id) => {
   revalidatePath("/dashboard");
   return data;
 };
+
+export const updateUser = async (id, newData) => {
+  const res = await fetch(`${process.env.SERVER_URL}/user/${id}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(newData),
+  });
+  const data = await res.json();
+  revalidatePath("/dashboard");
+  return data;
+};

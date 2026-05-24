@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="shadow bg-gray-100">
+    <div className="shadow bg-blue-50">
       <div className="max-w-7xl mx-auto flex flex-col p-2 lg:p-1">
         <div className="flex justify-between w-full items-center">
           <div className="navbar-start flex gap-2">
