@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { FaEdit } from "react-icons/fa";
 import { updateBooking } from "@/lib/actions";
+import toast from "react-hot-toast";
 
 const UpdateBookingModal = ({ app }) => {
   const { date, doctorName, time, name, reason, _id } = app;
@@ -9,7 +10,12 @@ const UpdateBookingModal = ({ app }) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newData = Object.fromEntries(formData.entries());
-    await updateBooking(_id, newData);
+    const res = await updateBooking(_id, newData);
+    if (res.modifiedCount > 0) {
+      toast.success("Booking updated.");
+    } else {
+      toast.error("Something went wrong.");
+    }
   };
   return (
     <div>

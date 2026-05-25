@@ -12,30 +12,36 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
-    console.log(user);
     const { data, error } = await authClient.signUp.email({
       name: user.name,
       email: user.email,
       password: user.password,
       image: user.imagUrl,
     });
-    console.log("data:", data, "error:", error);
+    if (data) {
+      toast.success("Registration successful.");
+    }
+    if (error) {
+      toast.error(error.message);
+    }
   };
+
   const googleSignUp = async () => {
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
+      callbackURL: "/?signup=success",
     });
-    console.log("google sign in data:", data);
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex justify-center mt-12">
+    <div className="max-w-7xl mx-auto px-4 md:px-0 md:flex justify-center mt-12">
       <div className="flex flex-col max-w-sm lg:min-w-sm bg-gray-100 p-8 rounded-lg">
         <div className="flex flex-col text-center">
           <p className="font-bold text-4xl">Register</p>

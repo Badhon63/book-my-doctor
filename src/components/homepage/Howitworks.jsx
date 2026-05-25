@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   FiSearch,
   FiFileText,
@@ -7,6 +10,9 @@ import {
 } from "react-icons/fi";
 
 const HowItWorks = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const steps = [
     {
       number: "01",
@@ -46,10 +52,38 @@ const HowItWorks = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
-    <section className="py-10 md:pt-20 bg-linear-to-b from-white via-gray-50 to-white">
+    <section
+      ref={ref}
+      className="py-10 md:pt-20 bg-linear-to-b from-white via-gray-50 to-white"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 md:mb-20">
+        <motion.div
+          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             How It Works
           </h2>
@@ -57,13 +91,22 @@ const HowItWorks = () => {
             Booking a doctor&apos;s appointment has never been easier. Follow
             these simple steps to schedule your visit.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             return (
-              <div key={index} className="relative group">
+              <motion.div
+                key={index}
+                className="relative group"
+                variants={itemVariants}
+              >
                 <div
                   className={`${step.color} rounded-2xl p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-2`}
                 >
@@ -106,17 +149,22 @@ const HowItWorks = () => {
                     </div>
                   </div>
                 )}
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        <div className="mt-6 md:mt-10 text-center">
+        <motion.div
+          className="mt-6 md:mt-10 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
           <p className="text-gray-600 mb-6">Ready to get started?</p>
           <button className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg">
             Browse Doctors Now
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

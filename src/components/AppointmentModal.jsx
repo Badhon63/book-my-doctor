@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Input,
@@ -12,24 +12,34 @@ import {
   Select,
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const AppointmentModal = ({ docDetails, createAppointment }) => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const userId = user?.id;
+  const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const appointment = Object.fromEntries(formData.entries());
     appointment.userId = userId;
-    await createAppointment(appointment);
+    const res = await createAppointment(appointment);
+    if (res.insertedId) {
+      toast.success("Appointment booked successfully.");
+      setIsOpen(false);
+    } else {
+      toast.error("Something went wrong.");
+    }
   };
 
   return (
     <div>
-      <Modal>
-        <Button className={"rounded-md mt-3"}>Book Appointment</Button>
+      <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+        <Button onClick={() => setIsOpen(true)} className={"rounded-md mt-3"}>
+          Book Appointment
+        </Button>
         <Modal.Backdrop>
           <Modal.Container placement="auto">
             <Modal.Dialog className="sm:max-w-lg">
@@ -40,7 +50,7 @@ const AppointmentModal = ({ docDetails, createAppointment }) => {
                   with {docDetails.name}
                 </p>
               </Modal.Header>
-              <Modal.Body className="p-6">
+              <Modal.Body className="py-6 px-1">
                 <Surface variant="default">
                   <form onSubmit={onSubmit} className="flex flex-col gap-4">
                     <TextField
@@ -78,7 +88,7 @@ const AppointmentModal = ({ docDetails, createAppointment }) => {
 
                     <div className="sm:flex gap-3">
                       <Select
-                        className="w-[256px] "
+                        className="w-full pb-4 sm:pb-0"
                         placeholder="Select one"
                         name="gender"
                         isRequired
@@ -156,9 +166,7 @@ const AppointmentModal = ({ docDetails, createAppointment }) => {
                       <Button slot="close" variant="secondary">
                         Cancel
                       </Button>
-                      <Button slot="" type="submit">
-                        Confirm Booking
-                      </Button>
+                      <Button type="submit">Confirm Booking</Button>
                     </Modal.Footer>
                   </form>
                 </Surface>

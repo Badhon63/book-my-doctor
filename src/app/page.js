@@ -3,6 +3,7 @@ import Banner from "../components/homepage/Banner";
 import FAQ from "../components/homepage/FAQ";
 import Howitworks from "../components/homepage/Howitworks";
 import TopDoctors from "../components/homepage/TopDoctors";
+import AuthToast from "@/components/AuthToast";
 
 export default async function Home() {
   const doctors = await getAllDoctors();
@@ -14,6 +15,7 @@ export default async function Home() {
       <TopDoctors topDoctors={topDoctors} />
       <Howitworks />
       <FAQ />
+      <AuthToast />
     </div>
   );
 }

@@ -12,37 +12,42 @@ import {
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
-    console.log("user:", user);
     const { data, error } = await authClient.signIn.email({
       email: user.email,
       password: user.password,
       rememberMe: true,
       callbackURL: "/",
     });
-    console.log("data:", data, "error:", error);
+    if (data) {
+      toast.success("Login successful.");
+    }
+    if (error) {
+      toast.error(error.message);
+    }
   };
 
   const googleLogin = async () => {
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
+      callbackURL: "/?login=success",
     });
-    console.log("google sign in data:", data);
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex justify-center mt-12">
+    <div className="max-w-7xl mx-auto px-4 md:px-0 md:flex justify-center mt-12">
       <div className="flex flex-col max-w-sm lg:min-w-sm bg-gray-100 p-8 rounded-lg">
         <div className="flex flex-col text-center">
           <p className="font-bold text-4xl">Login</p>
           <p className="text-gray-600 pt-2 pb-5">Welcome back to DoctorNow</p>
         </div>
-        <Form className="flex  flex-col gap-4 rounded-lg" onSubmit={onSubmit}>
+        <Form className="flex flex-col gap-4 rounded-lg" onSubmit={onSubmit}>
           <TextField
             isRequired
             name="email"

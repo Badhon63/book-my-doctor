@@ -2,10 +2,16 @@ import React from "react";
 import { AlertDialog, Button } from "@heroui/react";
 import { MdDeleteForever } from "react-icons/md";
 import { deleteBooking } from "@/lib/actions";
+import toast from "react-hot-toast";
 
 const DeleteModal = ({ app }) => {
   const handleDelete = async () => {
     const res = await deleteBooking(app._id);
+    if (res.deletedCount > 0) {
+      toast.success("Booking deleted.");
+    } else {
+      toast.error("Something went wrong.");
+    }
   };
 
   return (

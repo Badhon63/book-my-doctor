@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import { Button } from "@heroui/react";
 import { FiMapPin, FiClock } from "react-icons/fi";
 import Image from "next/image";
@@ -6,7 +9,14 @@ import Link from "next/link";
 
 const CardAllDoctors = ({ doctor }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 ">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      whileHover={{ y: -6 }}
+      className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200"
+    >
       <div className="w-full h-48 overflow-hidden">
         <Image
           src={doctor.image}
@@ -32,6 +42,7 @@ const CardAllDoctors = ({ doctor }) => {
         <div className="flex flex-col text-left justify-start py-3 gap-2">
           <div className="flex items-center gap-1">
             <FiClock className="w-5 h-5 opacity-60" />
+
             <span className="text-xs font-medium text-gray-700">
               {doctor.experience} experience
             </span>
@@ -39,6 +50,7 @@ const CardAllDoctors = ({ doctor }) => {
 
           <div className="flex items-center gap-1">
             <FiMapPin className="w-5 h-5 opacity-60" />
+
             <span className="text-xs font-medium text-gray-700">
               {doctor.location}
             </span>
@@ -48,18 +60,20 @@ const CardAllDoctors = ({ doctor }) => {
         <div className="flex justify-between items-center border-t border-gray-200 pt-4">
           <div className="flex flex-col">
             <p className="text-xs text-gray-700">Consultation</p>
+
             <span className="text-lg font-bold text-green-600">
               ৳{doctor.fee}
             </span>
           </div>
+
           <Link href={`doctors/${doctor.id}`}>
-            <Button color="primary" className=" font-semibold rounded-lg">
+            <Button color="primary" className="font-semibold rounded-lg">
               View Details
             </Button>
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

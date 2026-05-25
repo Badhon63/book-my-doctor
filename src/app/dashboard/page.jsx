@@ -6,7 +6,7 @@ import React from "react";
 
 const DashboardPage = async () => {
   const session = await auth.api.getSession({
-    headers: await headers(), // you need to pass the headers object.
+    headers: await headers(),
   });
 
   const userId = session?.user?.id;

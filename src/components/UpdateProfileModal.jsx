@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { FaEdit } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 import { updateUser } from "@/lib/actions";
+import toast from "react-hot-toast";
 
 const UpdateProfileModal = () => {
   const { data: session } = authClient.useSession();
@@ -13,7 +16,12 @@ const UpdateProfileModal = () => {
     const formData = new FormData(e.currentTarget);
     const updatedUserData = Object.fromEntries(formData.entries());
     const res = await updateUser(userId, updatedUserData);
-    console.log(res);
+    if (res.modifiedCount > 0) {
+      toast.success("Profile updated.");
+      window.location.reload();
+    } else {
+      toast.error("Something went wrong.");
+    }
   };
 
   return (
