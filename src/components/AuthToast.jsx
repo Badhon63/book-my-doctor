@@ -1,21 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const AuthToast = () => {
-  const searchParams = useSearchParams();
+  const router = useRouter();
+  const hasShown = useRef(false);
 
   useEffect(() => {
-    if (searchParams.get("signup") === "success") {
-      toast.success("Registration successful");
-    }
+    if (hasShown.current) return;
 
-    if (searchParams.get("login") === "success") {
-      toast.success("Login successful");
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("signup") === "success") {
+      toast.success("Registration successful");
+      hasShown.current = true;
+      router.replace(window.location.pathname);
     }
-  }, [searchParams]);
+    if (params.get("login") === "success") {
+      toast.success("Login successful");
+      hasShown.current = true;
+      router.replace(window.location.pathname);
+    }
+  }, [router]);
 
   return null;
 };

@@ -4,6 +4,11 @@ import { getAppointments } from "@/lib/fetchData";
 import { headers } from "next/headers";
 import React from "react";
 
+export const metadata = {
+  title: "DoctorNow | Dashboard",
+  description: "",
+};
+
 const DashboardPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
