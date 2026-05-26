@@ -1,6 +1,6 @@
 # 🩺 DoctorNow - Doctor Appointment Booking System
 
-**Live Site:** [DoctorNow Live](https://your-live-site-url.com)
+**Live Site:** [DoctorNow Live](https://doctor-now-seven.vercel.app/)
 
 ## ✨ Key Features
 
